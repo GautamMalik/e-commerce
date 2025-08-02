@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  service-discovery:
+    build:
+      dockerfile: Dockerfile
+    image: gautam01/e-commerce-backend:service-discovery
+    container_name: service-discovery
+    ports:
+      - "9001:9001"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9001/" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api-gateway:
+    build:
+      dockerfile: Dockerfile
+    image: gautam01/e-commerce-backend:api-gateway
+    container_name: api-gateway
+    ports:
+      - "9000:9000"
+    networks:
+      - app-network
+    depends_on:
+      service-discovery:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-discovery:9001/eureka/
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  user-service:
+    build:
+      dockerfile: Dockerfile
+    image: gautam01/e-commerce-backend:user-service
+    container_name: user-service
+    ports:
+      - "9002:9002"
+    networks:
+      - app-network
+    depends_on:
+      service-discovery:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-discovery:9001/eureka/
+
+  product-service:
+    build:
+      dockerfile: Dockerfile
+    image: gautam01/e-commerce-backend:product-service
+    container_name: product-service
+    ports:
+      - "9003:9003"
+    networks:
+      - app-network
+    depends_on:
+      service-discovery:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-discovery:9001/eureka/
+
+  order-service:
+    build:
+      dockerfile: Dockerfile
+    image: gautam01/e-commerce-backend:order-service
+    container_name: order-service
+    ports:
+      - "9004:9004"
+    networks:
+      - app-network
+    depends_on:
+      service-discovery:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-discovery:9001/eureka/
+
+  payment-service:
+    build:
+      dockerfile: Dockerfile
+    image: gautam01/e-commerce-backend:payment-service
+    container_name: payment-service
+    ports:
+      - "9005:9005"
+    networks:
+      - app-network
+    depends_on:
+      service-discovery:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-discovery:9001/eureka/
+
+  notification-service:
+    build:
+      dockerfile: Dockerfile
+    image: gautam01/e-commerce-backend:notification-service
+    container_name: notification-service
+    ports:
+      - "9006:9006"
+    networks:
+      - app-network
+    depends_on:
+      service-discovery:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-discovery:9001/eureka/
+
+networks:
+  app-network:
+    driver: bridge

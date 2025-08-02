@@ -1,0 +1,46 @@
+Steps to Set Up E-Commerce Backend Services:
+
+1. Pull Required Docker Images
+
+Open your terminal and run the following commands to pull the necessary Docker images for the e-commerce backend services:
+
+	docker pull gautam01/e-commerce-backend:service-discovery
+	docker pull gautam01/e-commerce-backend:api-gateway
+	docker pull gautam01/e-commerce-backend:user-service
+	docker pull gautam01/e-commerce-backend:product-service
+	docker pull gautam01/e-commerce-backend:order-service
+	docker pull gautam01/e-commerce-backend:payment-service
+	docker pull gautam01/e-commerce-backend:notification-service
+	
+	Note: Ensure that Docker is running on your machine before executing these commands.
+
+2. Navigate to the Directory Containing docker-compose.yml
+
+Once the images are pulled, navigate to the directory where your docker-compose.yml file is located. You can do this by running:
+
+
+3. Start the Services with Docker Compose
+
+In the same directory as docker-compose.yml, execute the following command to start the services:
+
+	docker-compose up
+
+This command will build and start the containers defined in your docker-compose.yml file.
+
+4. Run in Detached Mode (Optional)
+
+If you prefer to run the services in the background (detached mode), use the following command instead:
+
+	docker-compose up -d
+
+This will start the services in the background, allowing you to use your terminal for other tasks.
+
+Additional Notes:
+
+Ensure Docker and Docker Compose are installed and up-to-date on your machine.
+
+To stop the services later, run:
+
+docker-compose down
+
+This stops and removes all containers, networks, and volumes defined in your docker-compose.yml.

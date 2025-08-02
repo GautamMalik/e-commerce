@@ -1,0 +1,16 @@
+server:
+  port: 9004
+
+spring:
+  application:
+    name: ORDER-SERVICE
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:9001/eureka/}

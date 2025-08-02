@@ -1,0 +1,16 @@
+server:
+  port: 9006
+
+spring:
+  application:
+    name: NOTIFICATION-SERVICE
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    appname: NOTIFICATION-SERVICE
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:9001/eureka/}
